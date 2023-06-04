@@ -1,0 +1,40 @@
+.progress-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.progress-top > div {
+  height: 150px;
+  background: #fff;
+}
+.left {
+  min-width: 900px;
+  padding: 20px;
+  margin-right: 20px;
+}
+.right {
+  padding: 20px;
+  width: 300px;
+}
+.left:hover,
+.right:hover {
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(50, 50, 93, 0.15),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.title {
+  padding-bottom: 15px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #414a60;
+}
+.left-news {
+  display: flex;
+}
+.right-news .item .item-news {
+  display: flex;
+  justify-content: space-between;
+  color: #414a60;
+  border-bottom: 1px dashed #e3e7ed;
+  padding: 4px 0;
+  margin: 8px 0;
+}

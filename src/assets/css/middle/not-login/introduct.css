@@ -1,0 +1,38 @@
+.introduct-product {
+    padding: 100px 0px;
+    height: 480px;
+  }
+  .lelft {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .title {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 20px;
+  }
+  .description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .description-item span {
+    display: block;
+    max-width: 350px;
+    word-wrap: break-word;
+    text-align: left;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC,
+      Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial,
+      sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+    box-sizing: border-box;
+    margin-top: 0;
+    font-size: 18px;
+    line-height: 36px;
+    margin-bottom: 10px;
+    color: #424770;
+    font-weight: 300;
+  }
+  .right img {
+    width: 250px;
+  }

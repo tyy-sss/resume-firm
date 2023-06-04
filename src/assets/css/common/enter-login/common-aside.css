@@ -1,0 +1,58 @@
+.common-aside {
+  position: fixed;
+  height: 100vh;
+  max-width: 160px;
+  background-color: RGB(37, 40, 48);
+}
+.title {
+  padding: 20px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title .logo img {
+  width: 30px;
+  height: 30px;
+}
+.title .logo-name {
+  margin-left: 10px;
+  font-size: 20px;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: aliceblue;
+}
+.user {
+  color: aliceblue;
+  padding: 20px;
+}
+.user-avatar img {
+  width: 70px;
+  height: 70px;
+}
+.user-name,
+.user-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+.el-menu {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.el-menu-item:hover,
+.el-menu-item.is-active {
+  color: aliceblue !important;
+  background-color: black !important;
+}
+.el-menu .el-icon {
+  width: 40px;
+  height: 40px;
+}
+.el-menu-item span {
+  font-size: 16px;
+  text-overflow: ellipsis;
+}

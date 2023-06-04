@@ -1,0 +1,53 @@
+.login {
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: RGB(246, 249, 252);
+  }
+  .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .left img {
+    width: 400px;
+    height: 450px;
+  }
+  .right {
+    border-radius: 18px;
+    background-color: #fff;
+    width: 50vh;
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(50, 50, 93, 0.15),
+      0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  .form {
+    padding: 50px;
+  }
+  .right-title .logo {
+    color: #525f7f;
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .right-title .login-title {
+    font-size: 32px;
+    color: #32325d;
+    letter-spacing: 0.6px;
+    padding: 10px 0px;
+  }
+  .form-show{
+    padding: 15px 0;
+  }
+  .submit-button {
+    width:100%;
+    display: flex;
+    justify-content: center;
+  }
+  .other-choose {
+    display: flex;
+    justify-content: space-around;
+  }
+  /* 取消指定 router-link 元素的默认样式 */
+  .no-default-style {
+    text-decoration: none;
+  }

@@ -1,0 +1,53 @@
+
+.register {
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: RGB(246, 249, 252);
+  }
+  .middle {
+    border-radius: 18px;
+    background-color: #fff;
+    width: 50vh;
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(50, 50, 93, 0.15),
+      0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  .form {
+    padding: 20px 40px;
+  }
+  .title .register-title {
+    font-size: 32px;
+    color: #32325d;
+    letter-spacing: 0.6px;
+  }
+  .el-form-item {
+    margin: 15px;
+  }
+  .item {
+    width: 100%;
+  }
+  .item span {
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    color: #3c4257;
+    margin-bottom: 5px;
+  }
+  .submit-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .other-choose {
+    display: flex;
+    justify-content: flex-end;
+  }
+  /* 取消指定 router-link 元素的默认样式 */
+  .no-default-style {
+    text-decoration: none;
+  }
+  .right img,.left img{
+    width: 350px;
+    height: 400px;
+  }

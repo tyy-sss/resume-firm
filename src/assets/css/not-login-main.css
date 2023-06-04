@@ -1,0 +1,16 @@
+.el-container,
+.el-header,
+.el-main,
+.el-footer {
+  padding: 0px;
+}
+.el-header {
+  top: 0;
+  width: 100%;
+  position: fixed;
+  left: 0;
+}
+.el-footer {
+  left: 0;
+  width: 100%;
+}

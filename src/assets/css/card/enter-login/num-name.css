@@ -1,0 +1,28 @@
+.num-name {
+    display: flex;
+}
+.item {
+  position: relative;
+  cursor: pointer;
+  padding: 25px;
+  border: 1px solid RGB(227, 231, 237);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #414a60;
+}
+.item:hover {
+  background: RGB(232, 234, 251);
+}
+.item:hover div {
+  background: RGB(232, 234, 251);
+}
+.item:hover div .num {
+  font-size: 38px;
+}
+.item .num {
+  display: flex;
+  justify-content: center;
+  font-size: 28px;
+  line-height: 50px;
+}
