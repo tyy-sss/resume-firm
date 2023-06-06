@@ -103,7 +103,8 @@
   </div>
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
+import { useRoute } from "vue-router";
 // 界面
 import personalSettingHeader from "@/components/enter-login/common/personal-setting-header.vue";
 import addPostTitle from '@/components/enter-login/card/add-post-title.vue';
@@ -115,6 +116,10 @@ import {
   addPostTitleData,
   selectList,
 } from "@/assets/js/data/post/add-post.js";
+
+
+
+const route = useRoute();
 
 const titleValue = ref("职位信息");
 
@@ -173,6 +178,18 @@ const handleChange = () => {
   });
 };
 
+// 获取职位消息
+const getPostInformation = () =>{
+  const postTitle = ref(route.query.title).value;
+  if(postTitle === undefined||postTitle === null||postTitle===""){
+    console.log("获取职位消息")
+  }
+}
+
+onMounted(()=>{
+  // 当获得每一个职位的数据的时候，向后端请求数据
+  getPostInformation();
+})
 </script>
 <style scoped>
 .add-post {

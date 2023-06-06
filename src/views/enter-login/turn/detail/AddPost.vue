@@ -3,5 +3,5 @@
   </div>
 </template>
 <script setup>
-import addPost from "@/components/enter-login/all/add-post.vue";
+import addPost from "@/components/enter-login/all/turn/add-post.vue";
 </script>

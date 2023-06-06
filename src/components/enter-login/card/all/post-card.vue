@@ -5,8 +5,8 @@
         <post-left-news :data="recruitUserData"/>
       </div>
       <div class="right">
-        <el-button type="primary" @click="dialogTableVisible = true">添加候选人</el-button>
-        <upload-resume :dialogTableVisible="dialogTableVisible"/>
+        <el-button type="primary" @click="handleUpload">添加候选人</el-button>
+        <upload-resume ref="upload" :post="post"/>
       </div>
     </div>
     <div class="middle">
@@ -23,7 +23,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import numName from "@/components/enter-login/card/num-name.vue";
+import numName from "@/components/enter-login/common/num-name.vue";
 import postLeftNews from "@/components/enter-login/card/post-left-news.vue";
 import uploadResume from '@/components/enter-login/card/upload-resume.vue';
 
@@ -32,14 +32,19 @@ import {
   recruitmentProcessStyleData,
   recruitUserData,
 } from "@/assets/js/data/post/recruit";
+
 // 职位
 const post = recruitUserData.role;
-const dialogTableVisible = ref(false);
+const upload = ref(null)
+
+const handleUpload = () =>{
+  upload.value.dialogTableVisible = true;
+}
 
 const handleEdit = () =>{
   alert("编辑")
 }
-const handleClose = () =>{
+const handleClose = () =>{                                                                 
   alert("关闭")
 }
 </script>

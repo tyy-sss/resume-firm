@@ -6,7 +6,7 @@
     <div class="information">
       <div class="information-header">
         <div class="img" :style="{ background: data.headerColor }"></div>
-        <div class="news">招聘中</div>
+        <div class="news">{{ data.postProgress }}</div>
       </div>
       <div class="information-ender">
         <div v-for="(item, index) in data.list" :key="index">
@@ -22,7 +22,6 @@
   </div>
 </template>
 <script setup>
-import { reactive } from "vue";
 const props = defineProps({data:Object});
 const data = props.data;
 </script>

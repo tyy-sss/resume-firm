@@ -36,7 +36,7 @@ import {
   progressTopRightData,
   topLeftStyleData,
 } from "@/assets/js/data/home/home-data";
-import numName from "@/components/enter-login/card/num-name.vue";
+import numName from "@/components/enter-login/common/num-name.vue";
 </script>
 <style src="@/assets/css/home/progress-top.css" scoped>
 </style>

@@ -1,26 +1,25 @@
-
 ::v-deep .cell {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    height: 20px;
-    color: #63676f;
-    font-weight: 400;
-    padding: 0px;
-    padding-left: 10px;
-    cursor: pointer;
-  }
-  ::v-deep .el-table-column {
-    padding: 0;
-  }
-  ::v-deep .cell {
-    height: 30px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  ::v-deep .el-table__row {
-    padding: 0px;
-  }
-  ::v-deep .el-table__row:hover {
-    background: RGB(240, 241, 252);
-  }
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 20px;
+  color: #63676f;
+  font-weight: 400;
+  padding: 0px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+::v-deep .el-table-column {
+  padding: 0;
+}
+::v-deep .cell {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+::v-deep .el-table__row {
+  padding: 0px;
+}
+::v-deep .el-table__row:hover {
+  background: RGB(240, 241, 252);
+}

@@ -4,5 +4,5 @@
     </div>
 </template>
 <script setup>
-import excel from '@/components/enter-login/all/excel.vue'
+import excel from '@/components/enter-login/all/turn/excel.vue'
 </script>

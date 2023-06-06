@@ -10,7 +10,7 @@ const userHeaderData = reactive({
 const userMiddleData = reactive({
   userAvatar: "",
   name: "涂圆元",
-  isRecommend: false,
+  isRecommend: true,
   labelList: [
     { value: "名企经历" },
     { value: "稳定性高" },

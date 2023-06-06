@@ -89,7 +89,17 @@ const routes = [
         path: 'excel',
         name: 'excel',
         component: () => import('../views/enter-login/turn/detail/Excel.vue'),
-      }
+      },
+      {
+        path: 'person',
+        name: 'turn-person',
+        component: () => import('../views/enter-login/turn/detail/Person.vue'),
+      },
+      {
+        path: 'recruit',
+        name: 'recruit',
+        component: () => import('../views/enter-login/turn/detail/Recruit.vue'),
+      },
     ],
   },
   //登录
@@ -110,6 +120,11 @@ const routes = [
     name:'change-password',
     component:() => import('../views/prepare-login/ChangePassword.vue')
   },
+  {
+    path:"/test",
+    name:"test",
+    component:() => import('../views/Test.vue')
+  }
 ];
 
 const router = createRouter({

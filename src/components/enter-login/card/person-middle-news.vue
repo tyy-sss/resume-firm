@@ -93,18 +93,6 @@ const data = props.data;
   font-weight: bold;
   max-width: 60px;
 }
-.recommend {
-  border: 2px solid RGB(79, 121, 255);
-  color: RGB(79, 121, 255);
-  border-radius: 20%;
-  font-size: 13px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  padding: 1px;
-}
 .label {
   height: 20px;
   display: flex;
@@ -190,4 +178,6 @@ const data = props.data;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+</style>
+<style src="@/assets/css/card/enter-login/person/recommend.css" scoped>
 </style>
