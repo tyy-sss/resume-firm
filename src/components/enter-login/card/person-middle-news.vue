@@ -10,11 +10,8 @@
           <div class="recommend" v-if="data.isRecommend === true">
             <div>荐</div>
           </div>
-          <div class="label">
-            <div v-for="(item, index) in data.labelList" :key="index">
-              <div class="lable-item" v-if="index <= 3">{{ item.value }}</div>
-              <div class="time" v-else-if="index === 4">. . .</div>
-            </div>
+          <div>
+            <label-person :data="data.labelList" />
           </div>
         </div>
         <div class="middle">
@@ -61,10 +58,10 @@
   </div>
 </template>
 <script setup>
+import labelPerson from "@/components/common/label-person.vue";
 const props = defineProps({ data: Object });
 const data = props.data;
 </script>
-
 <style scoped>
 .person-middle-news {
   display: flex;
@@ -83,7 +80,6 @@ const data = props.data;
   height: 80px;
 }
 .left .information .top,
-.label,
 .experience-item,
 .experience,
 .time-item {
@@ -92,11 +88,6 @@ const data = props.data;
 .name {
   font-weight: bold;
   max-width: 60px;
-}
-.label {
-  height: 20px;
-  display: flex;
-  align-items: center;
 }
 .experience {
   max-width: 300px;
@@ -112,13 +103,6 @@ const data = props.data;
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.lable-item {
-  background: RGB(240, 248, 255);
-  color: RGB(79, 121, 255);
-  font-size: 13px;
-  padding: 6px;
-  margin-left: 10px;
 }
 .middle {
   margin: 10px 0 5px;

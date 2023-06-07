@@ -10,11 +10,13 @@ module.exports = defineConfig({
         jQuery: "jquery",
       }),
     ],
+    module: {
+      rules: [
+        {
+          test: /\.pdf$/,
+          use: "file-loader",
+        },
+      ],
+    },
   },
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns: []
-    }
-  }
 });

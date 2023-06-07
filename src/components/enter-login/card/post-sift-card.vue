@@ -42,10 +42,8 @@ const data = reactive({
 </script>
 <style scoped>
 .post-sift-card {
-  min-width: 243px;
-  border: 2px solid RGB(228,231,237);
-  background: RGB(247,248,250);
-  border-radius: 10px;
+  min-width: 245px;
+  background: RGB(238,240,245);
   min-height: 70vh;
 }
 .top {
@@ -55,7 +53,7 @@ const data = reactive({
   padding: 10px;
 }
 .middle{
-  border-top: 1px solid RGB(228,231,237);
+  /* border-top: 1px solid RGB(228,231,237); */
   padding-top: 5px;
 }
 .middle img {

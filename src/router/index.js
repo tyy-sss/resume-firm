@@ -91,14 +91,31 @@ const routes = [
         component: () => import('../views/enter-login/turn/detail/Excel.vue'),
       },
       {
-        path: 'person',
-        name: 'turn-person',
-        component: () => import('../views/enter-login/turn/detail/Person.vue'),
-      },
-      {
         path: 'recruit',
         name: 'recruit',
         component: () => import('../views/enter-login/turn/detail/Recruit.vue'),
+      },
+      {
+        path: 'person',
+        name: 'turn-person',
+        component: () => import('../views/enter-login/turn/detail/Person.vue'),
+        children:[
+          {
+            path: 'original-resume',
+            name: 'original-resume',
+            component: () => import('../views/enter-login/turn/detail/person/OriginalResume.vue'),
+          },
+          {
+            path: 'standard-resume',
+            name: 'standard-resume',
+            component: () => import('../views/enter-login/turn/detail/person/StandardResume.vue'),
+          },
+          {
+            path: 'candidate-portrait',
+            name: 'candidate-portrait',
+            component: () => import('../views/enter-login/turn/detail/person/CandidatePortrait.vue'),
+          },
+        ]
       },
     ],
   },

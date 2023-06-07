@@ -1,0 +1,12 @@
+.label {
+    height: 20px;
+    display: flex;
+    align-items: center;
+  }
+  .lable-item {
+    background: RGB(240, 248, 255);
+    color: RGB(79, 121, 255);
+    font-size: 13px;
+    padding: 6px;
+    margin-left: 10px;
+  }

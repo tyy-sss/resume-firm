@@ -242,7 +242,7 @@ onMounted(() => {
 }
 
 .scrollbar-demo-item > div {
-  margin-right: 13px;
+  margin-right: 16px;
   height: 90%;
 }
 </style>
