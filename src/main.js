@@ -7,10 +7,12 @@ import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import * as ElIconModules from "@element-plus/icons";
 
+import VuePdf from 'vue3-pdfjs'
+
 import $ from 'jquery';
 
 const app = createApp(App);
-app.use(store).use(ElementPlus).use(router).use($).mount("#app");
+app.use(store).use(ElementPlus).use(router).use($).use(VuePdf).mount("#app");
 
 // 统一注册Icon图标
 for (const iconName in ElIconModules) {
