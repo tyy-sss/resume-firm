@@ -24,7 +24,6 @@ const validatePhoneOne = (rule, value, callback) => {
   }
 };
 
-
 const validatePass = (rule, value, callback) => {
   var regex = /^(?=.*[a-zA-Z])(?=.*\d).{6,12}$/;
   if (value == "") {
@@ -37,5 +36,4 @@ const validatePass = (rule, value, callback) => {
   }
 };
 
-
-export { validatePhone,validatePhoneOne,validatePass }
+export { validatePhone, validatePhoneOne, validatePass };

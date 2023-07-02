@@ -14,30 +14,21 @@
             :model="formData.form"
             :rules="formData.rules"
           >
-            <el-form-item prop="email">
+            <el-form-item prop="userEmail">
               <div class="item">
                 <span>邮箱：</span>
                 <el-input
-                  v-model="formData.form.email"
+                  v-model="formData.form.userEmail"
                   placeholder="请输入邮箱"
                 ></el-input>
               </div>
             </el-form-item>
-            <el-form-item prop="name">
+            <el-form-item prop="userName">
               <div class="item">
                 <span>姓名：</span>
                 <el-input
-                  v-model="formData.form.name"
+                  v-model="formData.form.userName"
                   placeholder="请输入姓名"
-                ></el-input>
-              </div>
-            </el-form-item>
-            <el-form-item prop="phone">
-              <div class="item">
-                <span>电话：</span>
-                <el-input
-                  v-model="formData.form.phone"
-                  placeholder="请输入电话"
                 ></el-input>
               </div>
             </el-form-item>
@@ -93,9 +84,14 @@
 </template>
 <script setup>
 import { reactive, ref } from "vue";
-
+import store from "@/store";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+const router = useRouter();                                                                                                                                                                                                                                                                                                                                                     
+// 接口
+import { register } from "@/api/user";
 // 验证
-import { validatePhone,validatePass } from "@/assets/js/data/validateData";
+import { validatePass } from "@/assets/js/data/validateData";
 const registerForm = ref(null);
 
 const validatePass2 = (rule, value, callback) => {
@@ -111,20 +107,14 @@ const validatePass2 = (rule, value, callback) => {
 // 初始化数据
 const formData = reactive({
   form: {
-    email: "",
-    name: "",
-    phone: "",
+    userEmail: "",
+    userName: "",
     password: "",
     passwordAgain: "",
     companyName: "",
   },
-  code: {
-    codeTime: "获取验证码",
-    codeDisabled: false,
-    codeValue: null,
-  },
   rules: {
-    email: [
+    userEmail: [
       {
         type: "email",
         message: "请输入正确的邮箱地址",
@@ -132,11 +122,10 @@ const formData = reactive({
       },
       { required: true, message: "请输入邮箱地址" },
     ],
-    name: [{ required: true, message: "请输入姓名"}],
-    phone: [{ validator: validatePhone, trigger: "blur"}],
+    userName: [{ required: true, message: "请输入姓名" }],
     password: [{ validator: validatePass, trigger: "blur" }],
     passwordAgain: [{ validator: validatePass2, trigger: "blur" }],
-    companyName: [{ required: true, message: "请输入公司名称"}],
+    companyName: [{ required: true, message: "请输入公司名称" }],
   },
 });
 
@@ -144,7 +133,18 @@ const formData = reactive({
 const handleRegister = () => {
   registerForm.value.validate((valid) => {
     if (valid) {
-      console.log("验证通过");
+      const data = JSON.parse(JSON.stringify(formData.form));
+      register(data).then((res) => {
+        console.log(res);
+        const code = res.data.code;
+        console.log(store.state.gobal.success)
+        if (code === store.state.gobal.success) {
+          ElMessage.success("注册成功");
+          router.push({ path: 'login' });
+        } else {
+          ElMessage.error(res.data.message);
+        }
+      });
     } else {
       console.log("验证失败");
     }

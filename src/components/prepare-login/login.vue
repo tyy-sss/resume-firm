@@ -15,10 +15,10 @@
             :model="loginData.form"
             :rules="loginData.rules"
           >
-            <el-form-item prop="email">
+            <el-form-item prop="userEmail">
               <template #default>
                 <el-input
-                  v-model="loginData.form.email"
+                  v-model="loginData.form.userEmail"
                   placeholder="请输入邮箱"
                 ></el-input
               ></template>
@@ -56,20 +56,23 @@
 <script setup>
 import { reactive, ref } from "vue";
 import router from "@/router";
+import store from "@/store";
 // 验证
 import { validatePass } from "@/assets/js/data/validateData";
-
+// 接口
+import { login } from "@/api/user";
+import { ElMessage } from "element-plus";
 // 定义表单绑定的ref
 const loginForm = ref(null);
 
 // 定义初始化数据
 const loginData = reactive({
   form: {
-    email: "",
-    password: "",
+    userEmail: "3127023395@qq.com",
+    password: "tyy123456",
   },
   rules: {
-    email: [
+    userEmail: [
       {
         type: "email",
         message: "请输入正确的邮箱地址",
@@ -85,8 +88,27 @@ const loginData = reactive({
 const handleLogin = () => {
   loginForm.value.validate((valid) => {
     if (valid) {
-      console.log("验证通过");
-      router.push({path:'/home'});
+      login(loginData.form).then((res) => {
+        console.log(res.data.data)
+        if (res.data.code === store.state.gobal.success) {
+          // 保存token
+          store.commit("setToken", res.data.data.access_token);
+          // 保存refreshToken
+          store.commit("setRefreshToken", res.data.data.refresh_token);
+          // 保存用户信息
+          sessionStorage.setItem("user", JSON.stringify(res.data.data.userInfoDTO));
+          // console.log(JSON.parse(sessionStorage.getItem('user')).userEmail)
+          // 保存权限消息
+          store.commit("setPermissionsList",res.data.data.permissionsList)
+          // 保存菜单消息
+          store.commit("setMenu", res.data.data.menusList);
+          // 动态添加菜单信息
+          store.commit("addMenu");
+          router.push({ path: "/home" });
+        } else {
+          ElMessage.error(res.data.message);
+        }
+      });
     } else {
       console.log("验证失败");
     }

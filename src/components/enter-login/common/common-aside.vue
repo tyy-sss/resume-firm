@@ -27,7 +27,7 @@
         <div v-for="(item, index) in menuData" :key="index">
           <el-menu-item :index="item.path">
             <el-icon><component :is="item.icon" /></el-icon>
-            <span>{{ item.menuName }}</span>
+            <span>{{ item.name }}</span>
           </el-menu-item>
         </div>
       </el-menu>
@@ -38,17 +38,16 @@
 <script setup>
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
-import { asideData } from "@/assets/js/data/menu";
+import store from "@/store";
 const router = useRouter();
 // 初始化数据
 const userData = reactive({
   avatar: "@/assets/images/avatar.png",
   name: "小涂吃饭了没",
 });
-const menuData = reactive(asideData);
+const menuData = reactive(store.state.menu.menuData);
 
 const handleSelect = (key, keyPath) => {
-  console.log(asideData,"asideData")
   router.push({ path: key });
 };
 </script>

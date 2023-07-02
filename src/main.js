@@ -7,12 +7,19 @@ import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import * as ElIconModules from "@element-plus/icons";
 
-import VuePdf from 'vue3-pdfjs'
+import VuePdf from "vue3-pdfjs";
 
-import $ from 'jquery';
+import axios from "axios";
+import VueAxios from "vue-axios";
 
 const app = createApp(App);
-app.use(store).use(ElementPlus).use(router).use($).use(VuePdf).mount("#app");
+app
+  .use(store)
+  .use(ElementPlus)
+  .use(VueAxios, axios)
+  .use(router)
+  .use(VuePdf)
+  .mount("#app");
 
 // 统一注册Icon图标
 for (const iconName in ElIconModules) {

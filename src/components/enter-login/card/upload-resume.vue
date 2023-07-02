@@ -9,16 +9,25 @@
       </div>
       <div class="content">
         <div class="upload">
-          <div class="img">
-            <div class="text">
-              <div><img src="@/assets/images/upload.png" /></div>
+          <el-upload
+            class="upload-demo"
+            multiple
+            drag
+            accept=".doc,.docx,.pdf,image/png,image/jpg,image/jpeg"
+            :on-error="uploadError"
+            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+          >
+            <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+            <div class="el-upload__text">
               <div class="big">点击 或 拖拽</div>
               <div class="small">即可上传简历文件</div>
             </div>
-          </div>
-          <div class="title">
-            <div>支持PDF，DOC，DOCX，JPEG，JPG，PNG</div>
-          </div>
+            <template #tip>
+              <div class="el-upload__tip title">
+                <div>支持PDF，DOC，DOCX，JPEG，JPG，PNG</div>
+              </div>
+            </template>
+          </el-upload>
         </div>
       </div>
     </el-dialog>
@@ -34,6 +43,9 @@ var dialogTableVisible = ref(false);
 defineExpose({
   dialogTableVisible,
 });
+const uploadError = (file)=>{
+  console.log(file,"file")
+}
 </script>
 <style scoped>
 .post {
