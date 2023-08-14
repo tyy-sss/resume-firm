@@ -6,9 +6,9 @@
     <div class="buttom">
       <div class="table">
         <el-form ref="form" :model="formData.form" :rules="formData.rules">
-          <el-form-item label="用户头像：" prop="avatar">
+          <el-form-item label="用户头像：" prop="accountPicture">
             <div class="item">
-              <div><img :src="formData.form.avatar" /></div>
+              <div><img :src="formData.form.accountPicture" /></div>
               <div>
                 <el-button type="primary" @click="imagecropperShow = true"
                   >修改头像</el-button
@@ -24,18 +24,18 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="用户名称：" prop="name">
-            <el-input v-model="formData.form.name" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="用户邮箱：" prop="email">
-            <el-input v-model="formData.form.email" disabled></el-input>
-          </el-form-item>
-          <el-form-item label="手机号码：" prop="phone">
-            <el-input v-model="formData.form.phone" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="个人签名：" prop="signature">
+          <el-form-item label="用户名称：" prop="userName">
             <el-input
-              v-model="formData.form.signature"
+              v-model="formData.form.userName"
+              placeholder="请输入"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="用户邮箱：" prop="userEmail">
+            <el-input v-model="formData.form.userEmail" disabled></el-input>
+          </el-form-item>
+          <el-form-item label="个人签名：" prop="personalSignature">
+            <el-input
+              v-model="formData.form.personalSignature"
               placeholder="请输入个人签名"
               :autosize="{ minRows: 4, maxRows: 6 }"
               type="textarea"
@@ -43,9 +43,7 @@
           </el-form-item>
           <el-form-item>
             <div class="button">
-              <el-button type="primary" @click="handleChange"
-                >保存</el-button
-              >
+              <el-button type="primary" @click="handleChange">保存</el-button>
             </div>
           </el-form-item>
         </el-form>
@@ -54,38 +52,32 @@
   </div>
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import personalSettingHeader from "@/components/enter-login/common/personal-setting-header.vue";
 const titleValue = ref("个人设置");
-
 // 使用头像上传组件
 import myUpload from "vue-image-crop-upload";
 var imagecropperShow = ref(false);
 import i from "@/assets/images/avatar.png";
-
 const form = ref(null);
-
-// 验证
-import { validatePhone } from "@/assets/js/data/validateData";
-
+// 数据处理
+import { getUserNews } from "@/assets/js/util/user";
 // 初始化数据
 const formData = reactive({
   form: {
-    avatar: i,
-    email: "",
-    name: "",
-    phone: "",
-    signature: "",
+    accountPicture: i,
+    userEmail: "",
+    userName: "",
+    personalSignature: "",
   },
   rules: {
-    name: [{ required: true, message: "请输入姓名" }],
-    phone: [{ required: true, message: "请输入电话号码" },{ validator: validatePhone, trigger: "blur" }],
+    userName: [{ required: true, message: "请输入姓名" }],
   },
 });
 
 const cropSuccess = (imgDataUrl, field) => {
   //把头像设置成上传的图片
-  formData.form.avatar = imgDataUrl;
+  formData.form.accountPicture = imgDataUrl;
 };
 
 //修改消息
@@ -98,6 +90,9 @@ const handleChange = () => {
     }
   });
 };
+onMounted(() => {
+  formData.form = getUserNews();
+});
 </script>
 <style scoped>
 .self {
@@ -116,7 +111,7 @@ const handleChange = () => {
   padding: 5px;
 }
 .buttom {
-  padding:20px 40px;
+  padding: 20px 40px;
 }
 .item {
   width: 100%;

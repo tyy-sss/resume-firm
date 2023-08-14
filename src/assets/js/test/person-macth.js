@@ -1,0 +1,148 @@
+const tableData = [
+  {
+    rank: "1",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "李甜甜",
+    position: "前端开发工程师",
+    jobMatch: 89,
+  },
+  {
+    rank: "2",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "林国瑞",
+    position: "大数据中心专员",
+    jobMatch: 83,
+  },
+  {
+    rank: "3",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "连书忠",
+    position: "大数据中心专员",
+    jobMatch: 81,
+  },
+  {
+    rank: "4",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "林姿辛",
+    position: "人工智能算法工程师",
+    jobMatch: 79,
+  },
+  {
+    rank: "5",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "叶怡财",
+    position: "前端开发工程师",
+    jobMatch: 76,
+  },
+  {
+    rank: "6",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "冯雅筑",
+    position: "Java开发工程师",
+    jobMatch: 75,
+  },
+  {
+    rank: "7",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "袁哲仪",
+    position: "Java开发工程师",
+    jobMatch: 75,
+  },
+  {
+    rank: "8",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "白怡",
+    position: "后端开发工程师",
+    jobMatch: 69,
+  },
+  {
+    rank: "9",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "曹长城",
+    position: "人工智能算法工程师",
+    jobMatch: 65,
+  },
+  {
+    rank: "10",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "蔡昕瑀",
+    position: "大数据中心专员",
+    jobMatch: 60,
+  },
+];
+
+const selectTableData = [
+  {
+    rank: "1",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "白怡",
+    position: "后端开发工程师",
+    jobMatch: 69,
+  },
+  {
+    rank: "2",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "张省",
+    position: "后端开发工程师",
+    jobMatch: 66,
+  },
+  {
+    rank: "3",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "王葛强",
+    position: "后端开发工程师",
+    jobMatch: 60,
+  },
+  {
+    rank: "4",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "李开来",
+    position: "后端开发工程师",
+    jobMatch: 60,
+  },
+  {
+    rank: "5",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "张龙",
+    position: "后端开发工程师",
+    jobMatch: 59,
+  },
+  {
+    rank: "6",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "王依婷",
+    position: "后端开发工程师",
+    jobMatch: 56,
+  },
+  {
+    rank: "7",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "陈婉璇",
+    position: "后端开发工程师",
+    jobMatch: 56,
+  },
+  {
+    rank: "8",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "吴美玉",
+    position: "后端开发工程师",
+    jobMatch: 50,
+  },
+  {
+    rank: "9",
+    img:"https://ats.xiaoxizn.com/assets/17823c8dba3a87a03ff8ac2197dab9c5.svg",
+    name: "林家纶",
+    position: "后端开发工程师",
+    jobMatch: 48,
+  },
+  {
+    rank: "10",
+    img:"https://ats.xiaoxizn.com/assets/4c1dfa88596748bf19af303827ab0fcc.svg",
+    name: "郑昌梦",
+    position: "后端开发工程师",
+    jobMatch: 47,
+  },
+]
+
+const statusList =["RGB(64,158,255)","RGB(103,194,58)","RGB(230,162,60)","RGB(245,108,108)"]
+export { tableData,selectTableData,statusList }

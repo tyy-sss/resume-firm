@@ -2,25 +2,26 @@
   <div class="turn-person-header">
     <div class="top">
       <div class="left">
-        <img src="@/assets/images/avatar.png" />
+        <img :src="data.user.img" />
       </div>
-      <div class="right">
+      <div class="right" v-if="data.isCheck">
         <div class="top">
-          <div>{{ data.name }}</div>
+          <div>{{ data.user.name }}</div>
           <div>
-            <el-rate v-model="data.start" />
+            <el-rate v-model="data.user.start" disabled allow-half />
           </div>
-          <div class="recommend" v-if="data.isRecommend">
+          <div class="recommend" v-if="data.user.isRecommend">
             <div>荐</div>
           </div>
+          <!-- 个人标签 -->
           <div>
-            <label-person :data="data.labelList" />
+            <label-person :data="data.user.labelList" />
           </div>
         </div>
         <div class="buttom">
           <div
             class="information"
-            v-for="(item, index) in data.userList"
+            v-for="(item, index) in data.user.userList"
             :key="index"
           >
             <div class="information-item">
@@ -42,44 +43,31 @@
         >
       </div>
     </div>
-    <div>
-      <router-view />
+    <div class="content" v-if="data.isCheck">
+      <ul class="infinite-list" style="overflow: auto">
+        <router-view :pkResumeId="data.pkResumeId" />
+      </ul>
+      <div class="right">
+        <recruitment-progress :pkResumeId="data.pkResumeId" />
+      </div>
     </div>
   </div>
 </template>
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+// 界面
 import labelPerson from "@/components/common/label-person.vue";
-
+import recruitmentProgress from "@/components/enter-login/middle/recruit/recruitment-progress.vue";
+// 接口
+import { getOneResume } from "@/api/resume";
+// 数据处理
+import { handlePersonHeaderResume } from "@/assets/js/views/person/person";
+import store from "@/store";
 const router = useRouter();
 const route = useRoute();
-const nameValue = ref(route.query.name).value;
 var indexValue = ref(1);
-
-const data = reactive({
-  name: "tyy",
-  start: 3,
-  isRecommend: true,
-  labelList: [
-    { value: "技术达标" },
-    { value: "技术达标" },
-    { value: "技术达标" },
-    { value: "技术达标" },
-    { value: "技术达标" },
-  ],
-  userList: [
-    {
-      icon: "UserFilled",
-      value: "19813404813",
-    },
-    {
-      icon: "Message",
-      value: "19813404813",
-    },
-  ],
-});
-
+// 按钮数据
 const buttonList = reactive([
   {
     value: "原始简历",
@@ -94,25 +82,71 @@ const buttonList = reactive([
     path: "candidate-portrait",
   },
 ]);
-
+// 跳转界面
 const handleCheckView = (path, index) => {
   indexValue.value = index;
   router.push({
     path: path,
     query: {
-      name: nameValue,
+      pkResumeId: data.pkResumeId,
     },
   });
 };
+// 获取当前组件的路由消息
+const currentRouteParams = computed(() => {
+  return route.query;
+});
+const data = reactive({
+  user: {},
+  isCheck: false,
+  pkResumeId: currentRouteParams.value.pkResumeId,
+});
+// 得到当前简历的消息
+const getResume = () => {
+  getOneResume(data.pkResumeId).then((res) => {
+    if (res.data.code === store.state.global.success) {
+      console.log(res.data.data, "当前简历");
+      data.user = handlePersonHeaderResume(res.data.data);
+      data.isCheck = true;
+    }
+  });
+};
+onMounted(() => {
+  getResume();
+});
 </script>
 <style scoped>
 .turn-person-header > div {
-  padding-top: 10px;
   display: flex;
-  width: 100%;
+  width: 1100px;
 }
-.right {
+.turn-person-header > .top {
+  width: 1060px;
+  padding: 20px;
+}
+.left img {
+  width: 70px;
+  height: 70px;
+}
+.turn-person-header .top .right {
   margin-left: 20px;
+}
+.turn-person-header > .top,
+.turn-person-header > .buttom,
+.content {
+  position: absolute;
+  background: #fff;
+}
+.turn-person-header > .buttom {
+  height: 40px;
+  top: 190px;
+  padding-bottom: 0px;
+  border-bottom: 1px solid RGB(220, 223, 230);
+}
+.content {
+  top: 232px;
+  height: 500px;
+  bottom: 0;
 }
 .right .top {
   display: flex;
@@ -128,10 +162,6 @@ const handleCheckView = (path, index) => {
   font-size: 24px;
   line-height: 24px;
 }
-.left img {
-  width: 70px;
-  height: 70px;
-}
 .right .buttom,
 .information-item {
   display: flex;
@@ -143,13 +173,10 @@ const handleCheckView = (path, index) => {
 .information {
   display: flex;
   align-items: center;
+  padding-top: 5px;
 }
 .information-item > div {
   color: #89909e;
-}
-.buttons {
-  padding-bottom: 0px;
-  border-bottom: 1px solid RGB(220, 223, 230);
 }
 ::v-deep .el-button {
   border-bottom: 0;
@@ -157,6 +184,18 @@ const handleCheckView = (path, index) => {
 }
 .is-active {
   color: RGB(41, 121, 255) !important;
+}
+.infinite-list {
+  width: 800px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+}
+.content .right {
+  width: 300px;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(247, 248, 250);
 }
 </style>
 <style src="@/assets/css/card/enter-login/person/recommend.css" scoped>

@@ -2,7 +2,6 @@
   position: fixed;
   height: 100vh;
   max-width: 160px;
-  background-color: RGB(37, 40, 48);
 }
 .title {
   padding: 20px;
@@ -42,11 +41,15 @@
   margin: 0;
   padding: 0;
   border: 0;
+  width: 160px;
 }
 .el-menu-item:hover,
 .el-menu-item.is-active {
-  color: aliceblue !important;
-  background-color: black !important;
+  color: #fff !important;
+  background-color: RGB(25,120,253) !important;
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .el-menu .el-icon {
   width: 40px;

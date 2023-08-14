@@ -1,38 +1,29 @@
 <template>
   <div class="post-progress">
     <div class="top">
-      <div class="left"><post-left-news :data="recruitPostData" /></div>
+      <div class="left"><post-left-news ref="postLeftNewsRef" /></div>
       <div class="right">
-        <div class="edit" @click="handleTurnTo">编辑</div>
+        <div class="edit" v-if="isPermission(`editPosition`)" @click="handleTurnTo">编辑</div>
         <div>
           <div
-            v-if="recruitPostData.postProgress === '招聘中'"
-            class="close"
-            @click="handleOpenDialog('确认关闭该职位？')"
+            v-if="data.recruitPostData.postProgress === '招聘中'&&isPermission(`closePosition`)"
+            class="over"
           >
-            关闭
+            <div @click="handleOpenDialog('确认关闭该职位？')">关闭</div>
           </div>
-          <div v-else class="over">
+          <div v-else-if="data.recruitPostData.postProgress !== '招聘中'&&isPermission(`openPosition`)" class="over">
             <div @click="handleOpenDialog('确认重新激活该职位？')">激活</div>
-            <div>
-              <el-button
-                type="danger"
-                link
-                @click="handleOpenDialog('确定删除该职位？')"
-                >删除
-              </el-button>
-            </div>
           </div>
           <div class="dialog">
             <el-dialog
-              v-model="dialogVisible.close"
+              v-model="data.dialogVisible.close"
               title="操作确定"
               width="30%"
             >
-              <span>{{ dialogVisible.show }}</span>
+              <span>{{ data.dialogVisible.show }}</span>
               <template #footer>
                 <span class="dialog-footer">
-                  <el-button @click="dialogVisible.close = false"
+                  <el-button @click="data.dialogVisible.close = false"
                     >取消</el-button
                   >
                   <el-button type="primary" @click="handleClose">
@@ -44,7 +35,7 @@
           </div>
         </div>
         <el-button type="primary" @click="handleUpload">添加候选人</el-button>
-        <upload-resume ref="upload" :post="titleValue" />
+        <upload-resume ref="upload" />
       </div>
     </div>
     <div class="middle">
@@ -62,124 +53,124 @@
       </div>
     </div>
     <div class="buttom">
-      <el-button @click="handleTurnPage('left')"
-        ><el-icon><ArrowLeft /></el-icon
-      ></el-button>
-      <div ref="content" class="scrollbar-content">
-        <p
-          v-for="(item, index) in data"
-          :key="index"
-          class="scrollbar-demo-item"
-          :style="{transform:'translateX(-'+buttomList.move+'px)'}"
-        >
-          <post-sift-card />
-        </p>
-      </div>
-      <el-button @click="handleTurnPage('right')"
-        ><el-icon><ArrowRight /></el-icon
-      ></el-button>
+      <recruit-buttom/>
     </div>
   </div>
 </template>
 <script setup>
-import { nextTick, onMounted, reactive, ref } from "vue";
+import {  onMounted, reactive, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import postLeftNews from "@/components/enter-login/card/post-left-news.vue";
-import uploadResume from "@/components/enter-login/card/upload-resume.vue";
-import postSiftCard from "@/components/enter-login/card/post-sift-card.vue";
-
 const router = useRouter();
 const route = useRoute();
-const content = ref(null)
-const titleValue = ref(route.query.title).value;
-var dialogVisible = reactive({
-  close: false,
-  show: "",
-});
-var progressItemShow = ref(1);
-import { getRecruitPostData } from "@/assets/js/data/post/recruit";
-const recruitPostData = getRecruitPostData(titleValue);
-
+import store from "@/store";
+//界面
+import postLeftNews from "@/components/enter-login/card/post-left-news.vue";
+import uploadResume from "@/components/enter-login/card/upload-resume.vue";
+import recruitButtom from "@/components/enter-login/middle/recruit/recruit-buttom.vue"
+// 接口
+import { getPosition, closePosition, openPosition } from "@/api/posts";
+// 数据处理
+import { handleRecruitPostData } from "@/assets/js/views/recruit/recruit-progress";
+import { isPermission } from "@/assets/js/util/permissions";
+// 数据
+import { recruitPostData,closeRecruitPostData } from '@/assets/js/test/recruit-progress'
 const upload = ref(null);
-const handleUpload = () => {
-  upload.value.dialogTableVisible = true;
-};
-const data = reactive([{}, {}, {}, {}, {}, {}]);
-const buttomList = reactive({
-  realWidth: 0, // 真实宽度
-  viewWidth: 0, // 可视宽度
-  move: 0, // 移动位置
+const postLeftNewsRef = ref(null);
+const data = reactive({
+  positionId: ref(route.query.id).value,
+  recruitPostData: reactive({
+    role: "",
+    headerColor: "",
+    postProgress: "",
+    list: [],
+  }),
+  dialogVisible: reactive({
+    close: false,
+    show: "",
+  }),
 });
+//展示是关闭还是激活
+var progressItemShow = ref(1);
 // 编辑职位
 const handleTurnTo = () => {
   const href = router.resolve({
-    path: "/turn/add-post",
+    path: "/turn/post/post-news",
     query: {
-      title: titleValue,
+      positionId: data.positionId,
     },
   });
   window.open(href.href);
 };
 // 打开弹窗
 const handleOpenDialog = (show) => {
-  (dialogVisible.show = show), (dialogVisible.close = true);
+  (data.dialogVisible.show = show), (data.dialogVisible.close = true);
+};
+// 打开上传的对话框
+const handleUpload = () => {
+  upload.value.data.dialogTableVisible = true;
+  upload.value.data.post = data.recruitPostData.role;
 };
 // 关闭职位
 const handleClose = () => {
-  if (dialogVisible.show === "确认关闭该职位？") {
-  } else if (dialogVisible.show === "确认重新激活该职位？") {
-  } else if (dialogVisible.show === "确定删除该职位？") {
+  if (data.dialogVisible.show === "确认关闭该职位？") {
+    console.log("关闭");
+    // closePosition(data.positionId).then((res) => {
+    //   console.log(res);
+    //   if (res.data.code === store.state.global.success) {
+    //     getPostData();
+    //   }
+    // });
+    data.recruitPostData = closeRecruitPostData;
+    postLeftNewsRef.value.data = data.recruitPostData;
+  } else if (data.dialogVisible.show === "确认重新激活该职位？") {
+    // openPosition(data.positionId).then((res) => {
+    //   console.log(res);
+    //   if (res.data.code === store.state.global.success) {
+    //     getPostData();
+    //   }
+    // });
+    data.recruitPostData = recruitPostData;
+    postLeftNewsRef.value.data = data.recruitPostData;
   }
   // 向后端发送请求关闭该职位
-  dialogVisible.close = false;
+  data.dialogVisible.close = false;
 };
 // 选择展示的状态
 const handleClickActive = (data) => {
   progressItemShow.value = data;
 };
-// 获得宽度
-const rollTemp = () => {
-  nextTick(() => {
-    buttomList.realWidth = data.length * 260;
-    buttomList.viewWidth = content.value.offsetWidth;
+// 获得职位消息
+const getPostData = () => {
+  getPosition(data.positionId).then((res) => {
+    if (res.data.code === store.state.global.success) {
+      data.recruitPostData = handleRecruitPostData(res.data.data);
+      postLeftNewsRef.value.data = data.recruitPostData;
+    }
   });
 };
-// 展示框向左向右
-const handleTurnPage = (data) => {
-  console.log(buttomList.move,"move前")
-  if(data === 'left'){
-    // 向左移动
-   if(buttomList.move > 260){
-    buttomList.move = buttomList.move - buttomList.viewWidth;
-   }else{
-    buttomList.move = 0;
-   }
-  }else{
-    // 向右移动
-    if((buttomList.move + buttomList.viewWidth + 260)> buttomList.realWidth ){
-      buttomList.move = buttomList.move;
-    }else{
-      buttomList.move = buttomList.move + buttomList.viewWidth;
-    }
-  }
-};
-
 onMounted(() => {
-  rollTemp();
+  // getPostData();
+  data.recruitPostData = recruitPostData;
+  postLeftNewsRef.value.data = recruitPostData;
 });
 </script>
 <style scoped>
-.post-progress > div {
-  width: 1110px;
+.post-progress {
+  padding: 40px;
 }
 .top,
 .right {
   display: flex;
   justify-content: space-between;
 }
+.top .left {
+  display: flex;
+  align-items: center;
+}
 .middle,
 .buttom {
   display: flex;
+  margin-top: 20px;
 }
 .right > div {
   display: flex;
@@ -199,10 +190,11 @@ onMounted(() => {
 .over > div {
   margin-right: 10px;
 }
-.top{
+.top {
   margin-right: 40px;
 }
-.top,.middle {
+.top,
+.middle {
   margin-bottom: 10px;
   margin-left: 40px;
 }
@@ -220,29 +212,5 @@ onMounted(() => {
 .buttom {
   justify-content: center;
   align-items: center;
-}
-.buttom .el-button {
-  margin: 5px;
-  height: 100px;
-  width: 30px;
-  background: RGB(189, 189, 189);
-  border: 0;
-  color: #fff;
-}
-.scrollbar-content {
-  display: flex;
-  max-width: 95%;
-  overflow: hidden;
-}
-.scrollbar-content > div {
-  margin: 4px;
-  margin-bottom: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.scrollbar-demo-item > div {
-  margin-right: 16px;
-  height: 90%;
 }
 </style>

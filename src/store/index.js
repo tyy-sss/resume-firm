@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import createPersistedState from 'vuex-persistedstate'
 import menu from "./modules/menu";
-import gobal from "./modules/gobal";
+import global from "./modules/global";
 import permission from "./modules/permission";
 
 export default createStore({
@@ -17,7 +17,7 @@ export default createStore({
   actions: {},
   modules: {
     menu,
-    gobal,
+    global,
     permission,
   },
   /* vuex数据持久化配置 */

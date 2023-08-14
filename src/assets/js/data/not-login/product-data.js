@@ -3,7 +3,7 @@ import { reactive } from "vue";
 const allProductData = reactive([
   {
     img: "resume-analysis.png",
-    title: "简介解析",
+    title: "简历解析",
     description: "高效提取指定文件的简历信息",
     color: "RGB(103,114,229)",
     backgroundColor: "RGBA(103,114,229,0.2)",

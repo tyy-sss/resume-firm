@@ -15,19 +15,18 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
-const props = defineProps({data:Array,styleData:Object})
+const props = defineProps({data:Array,styleData:Object,id:Number})
 const data = props.data;
 const styleData = props.styleData;
 
 const router = useRouter();
-
 // 跳转界面
 const handleTurnTo =  (route,isBlank) =>{
   const href = router.resolve({
     path: route.path,
     query:{
-      title: route.query.title
-    }
+      id: props.id
+    },
   })
   if(isBlank){
     window.open(href.href,"_blank")

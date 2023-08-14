@@ -4,18 +4,19 @@ import router from "@/router";
 import { refreshToken } from "./user";
 
 const temp = "http://192.168.50.243:14565/";
+const pz = "http://192.168.50.137:14565/"
 //1.利用axios对象的方法create，去创建一个axios实例。
 const requests = axios.create({
   //配置对象
   //接口当中：路径都带有/api     基础路径，发送请求的时候，路径当中会出现api
-  baseURL: temp,
+  baseURL: pz,
   //代表请求超时的时间
   timeout: 5000,
 });
 
 //请求拦截器：
 requests.interceptors.request.use((config) => {
-  const token = store.state.gobal.token;
+  const token = sessionStorage.getItem('token');
   if (token) {
     config.headers.Authorization = "Bearer " + token;
   }
@@ -35,11 +36,11 @@ requests.interceptors.response.use(
     switch (code) {
       case "555":
         // 刷新token
-        if (store.state.gobal.refreshToken !== null) {
+        if (store.state.global.refreshToken !== null) {
           isNotRefreshing = false;
           refreshToken()
             .then((res) => {
-              if (res.data.code !== store.state.gobal.success) {
+              if (res.data.code !== store.state.global.success) {
                 // 清除本地保存记录，返回登录界面
                 router.push({
                   path: "/login",

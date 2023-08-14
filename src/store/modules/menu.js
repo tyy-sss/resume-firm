@@ -29,10 +29,11 @@ export default {
       if (menuArray[0] !== "") {
         menuArray.forEach((item) => {
           var path = item.path;
-          path = path.slice(1).replace(path[1], path[1].toLowerCase());
+          path = path.slice(1).replace(path[1], path[1].toUpperCase());
           router.addRoute("main", {
-            path: `${path}`,
-            component: () => import(`@/views/enter-login/enter/detail${item.path}.vue`),
+            path: `${item.path}`,
+            component: () =>
+              import(`@/views/enter-login/enter/detail/${path}.vue`),
           });
         });
       }

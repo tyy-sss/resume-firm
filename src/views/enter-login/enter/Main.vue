@@ -1,13 +1,11 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside>
-        <common-aside/>
-      </el-aside>
+      <el-header><common-header /></el-header>
       <el-container>
-        <el-header><common-header/></el-header>
+        <el-aside> <common-aside /></el-aside>
         <el-main>
-            <router-view/>
+          <router-view/>
         </el-main>
       </el-container>
     </el-container>

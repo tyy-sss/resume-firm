@@ -1,27 +1,27 @@
 <template>
   <div class="pdf-show">
-    <div>
-      <vue-pdf-embed
-        class="vue-pdf-embed"
-        :source="state.source"
-        :style="scale"
-        :page="state.pageNum"
-      />
-    </div>
-    <div class="page-tool">
-      <div class="page-tool-item" @click="lastPage">上一页</div>
-      <div class="page-tool-item" @click="nextPage">下一页</div>
-      <div class="page-tool-item">{{ state.pageNum }}/{{ state.numPages }}</div>
-      <div class="page-tool-item" @click="pageZoomOut">放大</div>
-      <div class="page-tool-item" @click="pageZoomIn">缩小</div>
+    <div class="show">
+      <div class="turn" @click="lastPage">&lt;</div>
+      <ul class="infinite-list" style="overflow: auto" ref="content">
+        <vue-pdf-embed
+          id="content"
+          class="vue-pdf-embed"
+          :source="state.source"
+          :style="scale"
+          :page="state.pageNum"
+        />
+      </ul>
+      <div class="turn" @click="nextPage">&gt;</div>
     </div>
   </div>
 </template>
-    <script setup>
-import { reactive, onMounted, computed } from "vue";
+<script setup>
+import { reactive, onMounted, computed, ref } from "vue";
 import VuePdfEmbed from "vue-pdf-embed";
+// 展示
 import { createLoadingTask } from "vue3-pdfjs/esm";
 
+const content = ref(null);
 const props = defineProps({
   pdfUrl: {
     type: String,
@@ -41,6 +41,7 @@ onMounted(() => {
   });
 });
 
+// 左右查看操作
 const scale = computed(() => `transform:scale(${state.scale})`);
 
 const lastPage = () => {
@@ -53,36 +54,42 @@ const nextPage = () => {
     state.pageNum += 1;
   }
 };
-const pageZoomOut = () => {
-  if (state.scale < 2) {
-    state.scale += 0.1;
-  }
-};
-const pageZoomIn = () => {
-  if (state.scale > 1) {
-    state.scale -= 0.1;
-  }
-};
 </script>
-    <style lang="css" scoped>
+<style lang="css" scoped>
 .pdf-show {
   position: relative;
-  padding: 10px 10px;
   box-sizing: border-box;
 }
-
+.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.infinite-list {
+  width: 650px;
+}
 .vue-pdf-embed {
   text-align: center;
-  width: 800px;
-  min-height: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
 }
+.turn {
+  height: 100px;
+  width: 30px;
+  background: RGB(189, 189, 189);
+  border: 0;
+  margin-left: 15px;
+  margin-right: 15px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
 .page-tool {
   position: absolute;
-  bottom: 35px;
-  padding-left: 15px;
-  padding-right: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
   display: flex;
   align-items: center;
   background: rgb(66, 66, 66);
@@ -93,9 +100,8 @@ const pageZoomIn = () => {
   margin-left: 50%;
   transform: translateX(-50%);
 }
-.page-tool-item {
+.page-tool .page-tool-item {
   padding: 8px 15px;
-  padding-left: 10px;
   cursor: pointer;
 }
 </style>

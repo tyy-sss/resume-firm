@@ -137,8 +137,8 @@ const handleRegister = () => {
       register(data).then((res) => {
         console.log(res);
         const code = res.data.code;
-        console.log(store.state.gobal.success)
-        if (code === store.state.gobal.success) {
+        console.log(store.state.global.success)
+        if (code === store.state.global.success) {
           ElMessage.success("注册成功");
           router.push({ path: 'login' });
         } else {

@@ -1,4 +1,6 @@
-// 用户
+/**
+ * 用户
+ */
 import request from "./request";
 import store from "@/store";
 

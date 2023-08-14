@@ -1,8 +1,5 @@
 import { reactive } from "vue";
 import store from "@/store";
-
-// var asideData = store.state.gobal.menuData; 
- 
 // personal 菜单
 const personalAsideData = reactive([
   {
@@ -25,10 +22,18 @@ const personalAsideData = reactive([
     path: "group",
     allPath: "/personal-setting/group",
   },
+]);
+// 职位的菜单信息
+const postAsideMenuData = reactive([
   {
-    menuName: "简历邮箱",
-    path: "email",
-    allPath: "/personal-setting/email",
+    menuName: "职位消息",
+    path: "post-news",
+    allPath: "/turn/post/post-news",
+  },
+  {
+    menuName: "团队设置",
+    path: "group",
+    allPath: "/turn/post/group",
   },
 ]);
 
@@ -42,4 +47,4 @@ const changePersonalSettingPath = (path, menuName) => {
   });
 };
 
-export { personalAsideData, changePersonalSettingPath };
+export { personalAsideData, changePersonalSettingPath, postAsideMenuData };

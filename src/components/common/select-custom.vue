@@ -30,10 +30,10 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { reactive, ref, watch } from "vue";
 // 获得父组件的传值
 const props = defineProps({ selectList: Object, widthValue: Number });
-const selectList = props.selectList;
+let selectList = reactive(props.selectList);
 // 给父组件传值
 const emit = defineEmits(["handleCheckData"]);
 
@@ -62,6 +62,10 @@ const handleCheck = (data) => {
     emit("handleCheckData", data);
   }
 };
+watch(()=>props.selectList,(newValue,oldValue)=>{
+  console.log(newValue )
+  selectList = newValue;
+})
 </script>
 <style scoped>
 .input-container {

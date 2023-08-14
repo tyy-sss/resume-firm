@@ -2,16 +2,14 @@
   <div class="post-card">
     <div class="top">
       <div class="left">
-        <post-left-news :data="recruitUserData"/>
-      </div>
-      <div class="right">
-        <el-button type="primary" @click="handleUpload">添加候选人</el-button>
-        <upload-resume ref="upload" :post="post"/>
+        <post-left-news ref="postLeftNewsRef" />
       </div>
     </div>
     <div class="middle">
       <num-name
-        :data="recruitmentProcessData"
+        v-if="data.isCheck"
+        :data="data.postData.process"
+        :id="props.postData.pkPositionId"
         :style-data="recruitmentProcessStyleData"
       ></num-name>
     </div>
@@ -22,31 +20,43 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, reactive, ref, toRefs, watch } from "vue";
+// 界面
 import numName from "@/components/enter-login/common/num-name.vue";
 import postLeftNews from "@/components/enter-login/card/post-left-news.vue";
-import uploadResume from '@/components/enter-login/card/upload-resume.vue';
-
-import {
-  recruitmentProcessData,
-  recruitmentProcessStyleData,
-  recruitUserData,
-} from "@/assets/js/data/post/recruit";
-
+import { recruitmentProcessStyleData } from "@/assets/js/data/post/recruit";
+// 处理数据
+import { handleRecruitmentData } from "@/assets/js/views/post/post-card";
+var props = defineProps(["postData"]);
+const data = reactive({
+  postData: props.postData,
+  isCheck: false,
+  isAddPerson: false,
+});
 // 职位
-const post = recruitUserData.role;
-const upload = ref(null)
-
-const handleUpload = () =>{
-  upload.value.dialogTableVisible = true;
-}
-
-const handleEdit = () =>{
-  alert("编辑")
-}
-const handleClose = () =>{                                                                 
-  alert("关闭")
-}
+const postLeftNewsRef = ref(null);
+const handleEdit = () => {
+  alert("编辑");
+};
+const handleClose = () => {
+  alert("关闭");
+};
+// 获得职位消息
+const getPostInformation = () => {
+  data.postData = handleRecruitmentData(props.postData);
+  postLeftNewsRef.value.data = data.postData.header;
+};
+onMounted(() => {
+  getPostInformation();
+  data.isCheck = true;
+});
+watch(
+  () => props.postData,
+  (newValue, oldView) => {
+    props.postData = newValue;
+    getPostInformation();
+  }
+);
 </script>
 <style scoped>
 .post-card {

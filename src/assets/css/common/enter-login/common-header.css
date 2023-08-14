@@ -1,14 +1,33 @@
 .common-header {
-  padding: 0;
   height: 60px;
-  background-color: RGB(255, 255, 255);
+  background-color: #fff;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  margin-right: 10vh;
+}
+.title {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5vh;
+}
+.title .logo img {
+  width: 90px;
+  height: 45px;
+}
+.title .logo-name {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: RGB(112,112,112);
 }
 .user {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin-right: 5vh;
 }

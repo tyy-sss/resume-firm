@@ -2,7 +2,7 @@
 export default {
     state: {
       //全局变量中的success
-      permissionsList: {},
+      permissionsList: null,
     },
     getters: {},
     mutations: {

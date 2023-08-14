@@ -18,7 +18,7 @@ function init() {
       trigger: "axis",
     },
     legend: {
-      data: ["新简历", "面试", "offer"],
+      data: [ "面试","offer", "新简历"],
     },
     grid: {
       left: "3%",
@@ -41,10 +41,10 @@ function init() {
     },
     series: [
       {
-        name: "新简历",
+        name: "offer",
         type: "line",
         stack: "Total",
-        data: [120, 132, 101, 134, 90, 230, 210],
+        data: [12, 12, 10, 13, 9, 10, 30],
       },
       {
         name: "面试",
@@ -53,7 +53,7 @@ function init() {
         data: [220, 182, 191, 234, 290, 330, 310],
       },
       {
-        name: "offer",
+        name: "新简历",
         type: "line",
         stack: "Total",
         data: [150, 232, 201, 154, 190, 330, 410],

@@ -23,7 +23,6 @@ const data = props.data;
   position: relative;
 }
 .label-list{
-    width: 1100px;
     display: flex; 
     flex-wrap: wrap;
 }

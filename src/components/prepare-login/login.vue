@@ -68,8 +68,8 @@ const loginForm = ref(null);
 // 定义初始化数据
 const loginData = reactive({
   form: {
-    userEmail: "3127023395@qq.com",
-    password: "tyy123456",
+    userEmail: "",
+    password: "",
   },
   rules: {
     userEmail: [
@@ -89,17 +89,21 @@ const handleLogin = () => {
   loginForm.value.validate((valid) => {
     if (valid) {
       login(loginData.form).then((res) => {
-        console.log(res.data.data)
-        if (res.data.code === store.state.gobal.success) {
+        if (res.data.code === store.state.global.success) {
           // 保存token
           store.commit("setToken", res.data.data.access_token);
           // 保存refreshToken
           store.commit("setRefreshToken", res.data.data.refresh_token);
+          sessionStorage.setItem("token", res.data.data.access_token);
+          sessionStorage.setItem("efreshToken", res.data.data.refresh_token);
           // 保存用户信息
-          sessionStorage.setItem("user", JSON.stringify(res.data.data.userInfoDTO));
+          sessionStorage.setItem(
+            "user",
+            JSON.stringify(res.data.data.userInfoDTO)
+          );
           // console.log(JSON.parse(sessionStorage.getItem('user')).userEmail)
           // 保存权限消息
-          store.commit("setPermissionsList",res.data.data.permissionsList)
+          store.commit("setPermissionsList", res.data.data.permissionsList);
           // 保存菜单消息
           store.commit("setMenu", res.data.data.menusList);
           // 动态添加菜单信息

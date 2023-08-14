@@ -1,7 +1,7 @@
 <template>
   <div class="left-news">
     <div class="role">
-      <h1>{{ data.role }}</h1>
+      <h1 v-html="data.role"></h1>
     </div>
     <div class="information">
       <div class="information-header">
@@ -22,13 +22,17 @@
   </div>
 </template>
 <script setup>
-const props = defineProps({data:Object});
-const data = props.data;
+import { ref } from "vue";
+let data = ref({});
+defineExpose({
+  data,
+});
 </script>
 <style scoped>
 .left-news {
   display: flex;
   color: #414a60;
+  align-items: center;
 }
 .role {
   margin-right: 20px;
@@ -50,11 +54,11 @@ const data = props.data;
   border-radius: 50%;
   margin-right: 5px;
 }
-.information-ender > div{
-    display: flex;
+.information-ender > div {
+  display: flex;
 }
-.content{
-    display: flex;
+.content {
+  display: flex;
 }
 .split {
   padding-left: 10px;

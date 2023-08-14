@@ -1,30 +1,43 @@
 <template>
   <div class="upload-resume">
-    <el-dialog v-model="dialogTableVisible" title="添加候选人">
+    <el-dialog v-model="data.dialogTableVisible" title="添加候选人">
       <el-divider />
-      <div class="post">
+      <div class="post" v-if="data.post">
         <div>添加候选人</div>
         <div>至</div>
-        <div>{{ post }}</div>
+        <div>{{ data.post }}</div>
       </div>
       <div class="content">
         <div class="upload">
           <el-upload
             class="upload-demo"
-            multiple
             drag
+            multiple
+            :show-file-list="false"
             accept=".doc,.docx,.pdf,image/png,image/jpg,image/jpeg"
-            :on-error="uploadError"
-            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+            action="#"
+            :http-request="uploadAction"
+            :before-upload="beforeUpload"
           >
-            <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-            <div class="el-upload__text">
-              <div class="big">点击 或 拖拽</div>
-              <div class="small">即可上传简历文件</div>
+            <div>
+              <div class="loading" v-if="!data.upload.isProgress">
+                <div>
+                  <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div class="el-upload__text">
+                  <div class="big">点击 或 拖拽</div>
+                  <div class="small">即可上传简历文件</div>
+                </div>
+                </div>
+               
+              </div>
+              <div class="loading" v-else v-loading="data.upload.isProgress"></div>
             </div>
             <template #tip>
               <div class="el-upload__tip title">
-                <div>支持PDF，DOC，DOCX，JPEG，JPG，PNG</div>
+                <div>
+                  <div>支持PDF，DOC，DOCX，JPEG，JPG，PNG</div>
+                  <div>限制一个文件，下一个文件会覆盖上一个文件</div>
+                </div>
               </div>
             </template>
           </el-upload>
@@ -34,18 +47,44 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
-const props = defineProps({ post: String });
-const post = props.post;
-var dialogTableVisible = ref(false);
-
+import { reactive } from "vue";
+import SparkMD5 from "spark-md5";
+// 接口
+import { uploadSingleResume } from "@/api/resume";
+import { ElMessage } from "element-plus";
+const data = reactive({
+  dialogTableVisible: false,
+  post: "",
+  upload: {
+    isProgress: false,
+  },
+});
 // 把参数暴露给父组件，让父组件进行修改
 defineExpose({
-  dialogTableVisible,
+  data,
 });
-const uploadError = (file)=>{
-  console.log(file,"file")
-}
+// 上传文件
+const uploadAction = (option) => {
+  // md5加密
+  const fileReader = new FileReader();
+  var spark = new SparkMD5.ArrayBuffer();
+  // 获取文件二进制数据
+  fileReader.readAsArrayBuffer(option.file);
+  fileReader.onload = function (e) {
+    spark.append(e.target.result);
+    var md5 = spark.end();
+    uploadSingleResume(option.file, md5).then((res) => {
+      ElMessage.success("上传成功");
+      data.dialogTableVisible = false;
+      setTimeout(()=>{
+        data.upload.isProgress = false;
+      },100)
+    });
+  };
+};
+const beforeUpload = (rawFile) => {
+  data.upload.isProgress = true;
+};
 </script>
 <style scoped>
 .post {
@@ -99,5 +138,12 @@ img {
 .small {
   color: #32325d;
   font-size: 18px;
+}
+/* 加载框 */
+.loading{
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

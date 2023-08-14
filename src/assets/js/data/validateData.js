@@ -26,7 +26,7 @@ const validatePhoneOne = (rule, value, callback) => {
 
 const validatePass = (rule, value, callback) => {
   var regex = /^(?=.*[a-zA-Z])(?=.*\d).{6,12}$/;
-  if (value == "") {
+  if (!value) {
     callback(new Error("请输入密码"));
   } else if (!regex.test(value.toString())) {
     console.log(value);

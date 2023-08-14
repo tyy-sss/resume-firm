@@ -2,7 +2,7 @@ import { reactive } from "vue";
 
 const progressTopLeftData = reactive([
   {
-    num: 22,
+    num: 25,
     name: "在招职位",
     router: {
       path: "/post",
@@ -13,7 +13,7 @@ const progressTopLeftData = reactive([
     isBlank: false,
   },
   {
-    num: 0,
+    num: 100,
     name: "本周新简历",
     router: {
       path: "/post",
@@ -24,7 +24,7 @@ const progressTopLeftData = reactive([
     isBlank: false,
   },
   {
-    num: 0,
+    num: 10,
     name: "本周面试",
     router: {
       path: "/post",
@@ -35,7 +35,7 @@ const progressTopLeftData = reactive([
     isBlank: false,
   },
   {
-    num: 2,
+    num: 5,
     name: "待入职",
     router: {
       path: "/post",
@@ -53,9 +53,9 @@ const topLeftStyleData = reactive({
 });
 
 const progressTopRightData = reactive([
-  { num: 22, name: "目标招聘人数" },
-  { num: 2, name: "待入职" },
-  { num: 2, name: "已入职" },
+  { num: 32, name: "目标招聘人数" },
+  { num: 5, name: "待入职" },
+  { num: 20, name: "已入职" },
 ]);
 
 export { progressTopLeftData, topLeftStyleData, progressTopRightData };

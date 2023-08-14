@@ -1,10 +1,10 @@
 <template>
   <div class="person-top-news">
     <div class="left">
-      <div>
+      <div v-if="data.post">
         <span>投递职位：</span> <span>{{ data.post }}</span>
       </div>
-      <div class="split">
+      <div class="split"  v-if="data.post">
         <span>|</span>
       </div>
       <div>
@@ -14,22 +14,31 @@
       </div>
     </div>
     <div class="right">
-      <div class="rate">
-        <span>职位匹配指数</span>
-        <el-rate v-model="data.rate" allow-half @change="hanleChangeRate(data.rate)" />
+      <div class="rate" v-if="data.rate">
+        <span>推荐指数</span>
+        <el-rate v-model="data.star" disabled allow-half />
       </div>
+      <div class="score">{{ data.rate }}</div>
     </div>
   </div>
 </template>
 <script setup>
+import {watch } from "vue";
 const props =  defineProps({data: Object});
-const data = props.data;
+var data = props.data;
 
 const emit = defineEmits(['hanldeChangeRate'])
 // 修改打分
-const hanleChangeRate = (data) => {
-  emit('hanldeChangeRate',data)
-};
+// const hanleChangeRate = (data) => {
+//   emit('hanldeChangeRate',data)
+// };
+watch(
+  () => props.data,
+  (newValue, oldView) => {
+    console.log(newValue)
+    data = newValue;
+  }
+);
 </script>
 <style scoped>
 .person-top-news{
@@ -54,7 +63,16 @@ const hanleChangeRate = (data) => {
   padding-left: 10px;
   padding-right: 10px;
 }
+.right{
+  display: flex;
+  align-items: center;
+}
 .rate > span {
   padding-right: 10px;
+}
+.score {
+  align-items: center;
+  color: #5a8bff;
+  font-size: 13px;
 }
 </style>

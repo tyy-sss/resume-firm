@@ -5,7 +5,6 @@
       <div class="left">
         <div class="logo">
           <img class="item" src="@/assets/images/logo.png" />
-          <div class="logo-text"><span>智筛</span></div>
         </div>
       </div>
       <div class="flex-grow" />

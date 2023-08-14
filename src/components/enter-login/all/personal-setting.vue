@@ -48,7 +48,7 @@ const handleSelect = (key, keyPath) => {
   background: #fff;
   display: flex;
 }
-.menu {
+.menu,.el-menu {
   width: 170px;
 }
 .menu,.content{

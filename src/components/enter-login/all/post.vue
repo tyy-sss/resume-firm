@@ -3,7 +3,13 @@
     <div class="top">
       <div class="search">
         <div class="search-input">
-          <el-input v-model="input1" class="w-50 m-2" :suffix-icon="Search" />
+          <el-input v-model="data.query.news" class="w-50 m-2">
+            <template #suffix>
+              <el-icon class="el-input__icon" @click="handleSearchPosts"
+                ><Search
+              /></el-icon>
+            </template>
+          </el-input>
         </div>
         <div class="select">
           <select-custom
@@ -13,52 +19,103 @@
           ></select-custom>
         </div>
       </div>
-      <div>
-        <el-button type="primary"
-          >   <router-link class="no-default-style" target="_blank" to="/turn/add-post">创建职位</router-link>
-          </el-button
-        >
+      <div v-if="isPermission(`addPosition`)">
+        <el-button type="primary" @click="turnToAddPost">
+          创建职位
+        </el-button>
       </div>
     </div>
     <div class="middle">
       <div class="post-news">
-        <div>
-          <post-card />
-          <post-card />
-          <post-card />
-          <post-card />
-          <post-card />
+        <div v-if="data.postList.length > 0">
+          <div v-for="(item, index) in data.postList" :key="index">
+            <post-card v-if="index<5" :post-data="item"/>
+          </div>
+          <div class="pages">
+            <el-pagination
+              background
+              layout="prev, pager, next"
+              :total="data.pageNews.total"
+              @current-change="handlePage"
+              class="mt-4"
+            />
+          </div>
         </div>
-      </div>
-      <div class="pages">
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="40"
-          class="mt-4"
-        />
+        <div v-else>
+          <el-empty :image-size="200" description="没有数据" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-
 // 界面
 import selectCustom from "@/components/common/select-custom.vue";
 import postCard from "@/components/enter-login/card/all/post-card.vue";
 import { Search } from "@element-plus/icons-vue";
-
 // 数据
 import { recruitTimeSelectList } from "@/assets/js/data/select-data/post-search-data";
-
-import { ref } from "vue";
-const input1 = ref("");
-
+import { getRecruitTimeValue } from "@/assets/js/views/post/post";
+import { isPermission } from "@/assets/js/util/permissions";
+// 接口
+import { getPostsListByPage } from "@/api/posts";
+import { onMounted, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import store from "@/store";
+const router = useRouter();
+const data = reactive({
+  pageNews: {
+    page: 0,
+    total: 1,
+  },
+  query: {
+    news: "",
+    state: -1,
+  },
+  postList: "",
+});
 // 得到修改后的下拉框数据
-const handleCheckData = (data) => {
-  console.log(data, "data");
+const handleCheckData = (time) => {
+  data.query.state = getRecruitTimeValue(time);
+  console.log(data.query.state)
+  handleSearchPosts();
 };
-                      
+// 搜索posts
+const handleSearchPosts = () => {
+  data.pageNews.page = 1;
+  getPostsLists();
+};
+// 切换分页
+const handlePage =(value)=>{
+  data.pageNews.page = value;
+  getPostsLists();
+}
+// 获得分页职位列表
+const getPostsLists = () => {
+  const postData = {
+    query: data.query.news,
+    state: data.query.state,
+    page: data.pageNews.page,
+    pageSize: data.pageNews.pageSize,
+  };
+  getPostsListByPage(postData).then((res) => {
+    console.log(res,"分页展示职位");
+    if (res.data.code === store.state.global.success) {
+      data.pageNews.total = res.data.data.totalCount;
+      data.postList = res.data.data.data;
+    }
+  });
+};
+// 打开新建职位界面
+const turnToAddPost = () =>{
+  const href = router.resolve({
+    path:'/turn/post/post-news',
+  })
+  window.open(href.href,"_blank")
+}
+onMounted(() => {
+  getPostsLists();
+});
 </script>
 <style scoped>
 .top {
@@ -88,9 +145,9 @@ const handleCheckData = (data) => {
   width: 97%;
   min-width: 800px;
 }
-  /* 取消指定 router-link 元素的默认样式 */
-  .no-default-style {
-    text-decoration: none;
-    color: #fff;
-  }
+/* 取消指定 router-link 元素的默认样式 */
+.no-default-style {
+  text-decoration: none;
+  color: #fff;
+}
 </style>

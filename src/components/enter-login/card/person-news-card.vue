@@ -1,37 +1,40 @@
 <template>
   <div class="person-news-card">
     <div class="top">
-      <div class="left"><img src="@/assets/images/avatar.png" /></div>
-      <div class="right">
-        <div class="title">
-          <div class="left">
-            <div class="name">{{ data.name }}</div>
-            <div v-if="data.isRecommend" class="recommend">
+      <div class="left">
+        <div class="img">
+          <img :src="props.data.img" />
+        </div>
+        <div>
+          <div class="user">
+            <div class="name">{{ props.data.name }}</div>
+            <div v-if="props.data.isRecommend" class="recommend">
               <div>荐</div>
             </div>
           </div>
-          <div class="right">
-            <el-button
-              type="primary"
-              :icon="Delete"
-              circle
-              @click="handleDeleteCandidate"
+          <div class="rate">
+            <el-rate
+              v-model="props.data.rate.star"
+              allow-half
+              @change="hanleChangeRate(props.data.rate)"
             />
+            <div>{{ props.data.rate.num }}</div>
           </div>
         </div>
-        <div class="rate">
-          <el-rate
-            v-model="data.rate.star"
-            allow-half
-            @change="hanleChangeRate(data.rate)"
-          />
-          <div>{{ data.rate.num }}</div>
-        </div>
+      </div>
+      <div class="right">
+        <el-button
+          circle
+          @click="handleDeleteCandidate"
+        >
+        <el-icon style="font-size: 20px;color: RGB(155,162,171);"><Delete /></el-icon>
+      </el-button>
       </div>
     </div>
     <div class="buttom">
       <div class="item" v-for="(item, index) in data.list" :key="index">
-        <el-icon><Reading /></el-icon>
+        <el-icon v-if="!index"><Reading /></el-icon>
+        <el-icon v-if="index"><Monitor /></el-icon>
         <div class="information">{{ item.value }}</div>
       </div>
     </div>
@@ -40,59 +43,57 @@
 <script setup>
 import { reactive } from "vue";
 import { Delete } from "@element-plus/icons-vue";
-const data = reactive({
-  name: "tyy",
-  isRecommend: true,
-  rate: {
-    star: 3,
-    num: 61.5,
-  },
-  list: [
-    {
-      value: "无工作经验",
-    },
-    { value: "吉首大学 | 本科" },
-  ],
-});
-
+const props = defineProps({ data:Object })
 // 修改评分
 const hanleChangeRate = () => {};
 
 // 删除候选人
-const handleDeleteCandidate = () => {};
+const handleDeleteCandidate = () => {
+  console.log("删除")
+};
 </script>
 <style scoped>
 .person-news-card {
   background: #fff;
-  padding: 4px;
-  width: 210px;
+  padding: 10px;
+  width: 240px;
+  margin-top: 10px;
+  border-radius: 10px;
 }
 .person-news-card:hover {
   box-shadow: 2px 2px 1px #a5adba;
-  background-color: #e8ebf9;
-  border-radius: 3px;
+  border-radius: 10px;
 }
-.top {
+.top,
+.user,
+.left {
   display: flex;
   align-items: center;
 }
 .left img {
-  width: 36px;
-  height: 36px;
-  margin: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+}
+.user .name{
+  font-size: 18px;
 }
 .right {
   color: #414a60;
   font-size: 14px;
   line-height: 18px;
-}
-.title .left,
-.title {
   display: flex;
   align-items: center;
+  margin-left: 5px;
 }
-.title {
-  justify-content: space-between;
+.right .el-button {
+  background-color: RGB(242, 244, 247) !important;
+  color: rgb(155, 162, 171);
+  border: none;
+}
+.el-icon svg {
+  font-weight: bold !important;
+  font-size:30px !important;
 }
 .rate {
   display: flex;

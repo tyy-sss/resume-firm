@@ -2,7 +2,7 @@
   <div class="person-middle-news">
     <div class="left">
       <div class="img">
-        <img src="@/assets/images/user.png" />
+        <img :src="data.img" />
       </div>
       <div class="information">
         <div class="top">
@@ -58,9 +58,16 @@
   </div>
 </template>
 <script setup>
+import {watch } from "vue";
 import labelPerson from "@/components/common/label-person.vue";
 const props = defineProps({ data: Object });
-const data = props.data;
+var data = props.data;
+watch(
+  () => props.data,
+  (newValue, oldView) => {
+    data = newValue;
+  }
+);
 </script>
 <style scoped>
 .person-middle-news {
@@ -88,6 +95,7 @@ const data = props.data;
 .name {
   font-weight: bold;
   max-width: 60px;
+  margin-right: 10px;
 }
 .experience {
   max-width: 300px;
@@ -97,10 +105,6 @@ const data = props.data;
   color: #89909e;
   font-weight: 300;
   height: 44px;
-  display: -webkit-box;
-  -webkit-text-size-adjust: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -150,14 +154,12 @@ const data = props.data;
 }
 /* 超过内容高度处理  */
 .timeline {
-  height: 110px;
   overflow: hidden;
 }
 /* 超过内容宽度处理 */
 .name,
 .experience,
 .content {
-  display: -webkit-box;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -2,15 +2,6 @@
   <div class="interview">
     <div class="top">
       <div class="choose">
-        <div class="choose-aside">
-          <el-button @click="drawer = true">
-            <el-icon><Fold /></el-icon>
-            <span>筛选</span>
-          </el-button>
-          <el-drawer v-model="drawer" direction="ltr" title="I am the title">
-            <span>Hi there!</span>
-          </el-drawer>
-        </div>
         <div>
           <select-custom
             :widthValue="200"

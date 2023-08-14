@@ -14,66 +14,11 @@ const recruitmentProcessData = reactive([
     },
     isBlank: true,
   },
-  {
-    num: 0,
-    name: "部门筛选",
-    router: {
-      path: "/turn/recruit",
-      query: {
-        title: "前端开发工程师",
-      },
-    },
-    isBlank: true,
-  },
-  {
-    num: 0,
-    name: "面试",
-    router: {
-      path: "/turn/recruit",
-      query: {
-        title: "前端开发工程师",
-      },
-    },
-    isBlank: true,
-  },
-  {
-    num: 0,
-    name: "沟通offer",
-    router: {
-      path: "/turn/recruit",
-      query: {
-        title: "前端开发工程师",
-      },
-    },
-    isBlank: true,
-  },
-  {
-    num: 0,
-    name: "待入职",
-    router: {
-      path: "/turn/recruit",
-      query: {
-        title: "前端开发工程师",
-      },
-    },
-    isBlank: true,
-  },
-  {
-    num: 0,
-    name: "已入职",
-    router: {
-      path: "/turn/recruit",
-      query: {
-        title: "前端开发工程师",
-      },
-    },
-    isBlank: true,
-  },
 ]);
 
 const recruitmentProcessStyleData = reactive({
-  width: "160px",
-  height: "30px",
+  width: "200px",
+  height: "35px",
 });
 
 // 招聘人的信息
@@ -117,4 +62,4 @@ const getRecruitPostData =(role) =>({
     },
   ],
 })
-export { recruitmentProcessData, recruitmentProcessStyleData, recruitUserData,getRecruitPostData };
+export { recruitmentProcessStyleData, recruitUserData,getRecruitPostData };

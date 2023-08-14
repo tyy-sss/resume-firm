@@ -1,13 +1,13 @@
 .recommend {
-    border: 2px solid RGB(79, 121, 255);
-    color: RGB(79, 121, 255);
-    border-radius: 20%;
-    font-size: 13px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 10px;
-    padding: 2px;
-    height: 15px;
-  }
+  border: 2px solid RGB(79, 121, 255);
+  color: RGB(79, 121, 255);
+  border-radius: 20%;
+  font-size: 13px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  padding: 2px;
+  height: 15px;
+}

@@ -30,8 +30,11 @@ const data = props.data;
 }
 .name{
     color: #89909e;
+    width: 80px;
+    text-align: right;
 }
 .value{
     color: rgba(0, 0, 0, 0.85);
+    min-width: 160px;
 }
 </style>
